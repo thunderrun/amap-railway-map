@@ -6,9 +6,7 @@
       content="width=device-width, initial-scale=1.0,  user-scalable=no"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="icon" 
-      type="image/png" 
-      href="./favicon.png">
+    <link rel="icon" type="image/png" href="./favicon.png" />
     <title>铁路地图</title>
     <style>
       html,
@@ -28,12 +26,12 @@
     ></script>
     <script>
       var map = new AMap.Map("container", {
-        mapStyle: 'amap://styles/aebe189d2072666f6fccc6c2d4946af7',
+        mapStyle: "amap://styles/aebe189d2072666f6fccc6c2d4946af7"
       });
       var satelliteLayer = new AMap.TileLayer.Satellite({
         zIndex: -1
       });
-      map.add(satelliteLayer)
+      map.add(satelliteLayer);
     </script>
   </body>
 </html>
