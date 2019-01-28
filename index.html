@@ -20,18 +20,7 @@
   </head>
   <body>
     <div id="container"></div>
-    <script
-      type="text/javascript"
-      src="https://webapi.amap.com/maps?v=1.4.12&key=75139a7d0e35241fa3f421fbd3a2b423"
-    ></script>
-    <script>
-      var map = new AMap.Map("container", {
-        mapStyle: "amap://styles/aebe189d2072666f6fccc6c2d4946af7"
-      });
-      var satelliteLayer = new AMap.TileLayer.Satellite({
-        zIndex: -1
-      });
-      map.add(satelliteLayer);
-    </script>
+    <script src="https://webapi.amap.com/maps?v=1.4.12&key=75139a7d0e35241fa3f421fbd3a2b423" ></script>
+    <script src="./index.js" ></script>
   </body>
 </html>
