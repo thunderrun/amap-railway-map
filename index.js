@@ -42,6 +42,14 @@ document.onkeyup = e => {
     } else {
       map.setMapStyle("amap://styles/ab8e6d6ef2ba3500d70346b36f66dba2");
     }
+  } else if (e.key === "b") {
+    addInfantry("blue");
+  } else if (e.key === "r") {
+    addInfantry("red");
+  } else if (e.key === ";") {
+    console.log('working in progress')
+  } else if (e.key === "l") {
+    console.log('working in progress')
   } else {
     clearInterval(intervals[e.key]);
     document.onkeydown = keyHandler;
@@ -53,7 +61,15 @@ document.onkeyup = e => {
 const redCenter = [116.42792, 39.902896];
 const blueCenter = [118.797466, 32.087265];
 
+let draw;
+let lnglat = {
+  lng: blueCenter[0],
+  lat: blueCenter[1]
+};
+let images = [];
 let dargging = false;
+let currentImage;
+let currentMousePosition;
 
 map.plugin(["AMap.CustomLayer"], function() {
   var size = map.getSize();
@@ -62,38 +78,56 @@ map.plugin(["AMap.CustomLayer"], function() {
   canvas.setAttribute("width", size.width);
   canvas.setAttribute("height", size.height);
 
-  const draw = SVG(canvas);
-  image = draw.image("./blue.png");
-  image.addClass("move");
-  image.size(60, 40);
-  const center = map.lngLatToContainer(blueCenter);
-  lnglat = {
-    lng: blueCenter[0],
-    lat: blueCenter[1]
-  };
-  image.center(center.x, center.y);
-  image.draggable();
-  image.on("dragstart.namespace", function(event) {
-    dargging = true;
-  });
-  image.on("dragend.namespace", function(event) {
-    dargging = false;
-  });
+  draw = SVG(canvas);
 
   var customLayer = new AMap.CustomLayer(canvas, {
-    zIndex: 300
+    zIndex: 3000
   });
   customLayer.render = onRender;
   map.add(customLayer);
 });
 
+const addInfantry = faction => {
+  const image = draw.image(`./${faction}.png`);
+  image.addClass("move");
+  image.size(60, 40);
+  const lnglat = map.containerToLngLat(currentMousePosition);
+  image.center(currentMousePosition.x, currentMousePosition.y);
+  image.remember("lnglat", lnglat);
+  image.mousedown(e => {
+    currentImage = image;
+    map.setStatus({ dragEnable: false });
+    image.center(e.clientX, e.clientY);
+    dargging = true;
+  });
+  images.push(image);
+};
+
 function onRender() {
-  const center = map.lngLatToContainer([lnglat.lng, lnglat.lat]);
-  image.center(center.x, center.y);
+  images.forEach(image => {
+    const center = map.lngLatToContainer([
+      image._memory.lnglat.lng,
+      image._memory.lnglat.lat
+    ]);
+    image.center(center.x, center.y);
+  });
 }
 
+let inThrottle = false;
+map.on("mousemove", e => {
+  currentMousePosition = e.pixel;
+  if (dargging) {
+    if (inThrottle) return;
+    inThrottle = true;
+    currentImage.center(e.pixel.x, e.pixel.y);
+    setTimeout(() => (inThrottle = false), 100);
+  }
+});
 map.on("mouseup", e => {
   if (dargging) {
-    lnglat = e.lnglat;
+    dargging = false;
+    currentImage.center(e.pixel.x, e.pixel.y);
+    currentImage.remember("lnglat", e.lnglat);
+    map.setStatus({ dragEnable: true });
   }
 });
