@@ -5,16 +5,16 @@
 
 ## Control
 
-- `w`: move up
-- `a`: move left
-- `s`: move down
-- `d`: move right
-- `g`: game mode
-- `r`: spawn redfor infantry on mouse position
-- `b`: spawn bluefor infantry on mouse position
-- `l`: load last saved game (WIP)
-- `;`: save game (WIP)
-- `z`: toogle NATO symbol z-index
-- `RMB`: delete symbol
+- `w` move up
+- `a` move left
+- `s` move down
+- `d` move right
+- `g` game mode
+- `r` spawn redfor infantry on mouse position
+- `b` spawn bluefor infantry on mouse position
+- `l` load last saved game (WIP)
+- `;` save game (WIP)
+- `z` toogle NATO symbol z-index
+- `RMB` delete symbol
 
 ![](./screenshot3.jpg)
