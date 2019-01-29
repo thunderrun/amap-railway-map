@@ -8,6 +8,7 @@ const satelliteLayer = new AMap.TileLayer.Satellite({
 map.add(satelliteLayer);
 
 let gameMode = false;
+let toogleZIndex = true;
 
 // set up controls
 
@@ -47,9 +48,12 @@ document.onkeyup = e => {
   } else if (e.key === "r") {
     addInfantry("red");
   } else if (e.key === ";") {
-    console.log('working in progress')
+    console.log("working in progress");
   } else if (e.key === "l") {
-    console.log('working in progress')
+    console.log("working in progress");
+  } else if (e.key === "z") {
+    toogleZIndex = !toogleZIndex;
+    customLayer.setzIndex(toogleZIndex ? 300 : 10);
   } else {
     clearInterval(intervals[e.key]);
     document.onkeydown = keyHandler;
@@ -70,6 +74,7 @@ let images = [];
 let dargging = false;
 let currentImage;
 let currentMousePosition;
+let customLayer;
 
 map.plugin(["AMap.CustomLayer"], function() {
   var size = map.getSize();
@@ -80,8 +85,8 @@ map.plugin(["AMap.CustomLayer"], function() {
 
   draw = SVG(canvas);
 
-  var customLayer = new AMap.CustomLayer(canvas, {
-    zIndex: 3000
+  customLayer = new AMap.CustomLayer(canvas, {
+    zIndex: 300
   });
   customLayer.render = onRender;
   map.add(customLayer);
