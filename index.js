@@ -100,6 +100,9 @@ const addInfantry = faction => {
   image.center(currentMousePosition.x, currentMousePosition.y);
   image.remember("lnglat", lnglat);
   image.mousedown(e => {
+    if (e.which === 3 ) {
+      image.remove();
+    }
     currentImage = image;
     map.setStatus({ dragEnable: false });
     image.center(e.clientX, e.clientY);

@@ -15,3 +15,4 @@
 - `l`: load last saved game (WIP)
 - `;`: save game (WIP)
 - `z`: toogle NATO symbol z-index
+- `RMB`: delete symbol
