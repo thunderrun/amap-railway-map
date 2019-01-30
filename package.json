@@ -4,11 +4,15 @@
   "description": "![](./assets/screenshot1.jpg) ![](./assets/screenshot2.jpg)",
   "main": "./src/index.js",
   "dependencies": {
-    "combokeys": "^3.0.0"
+    "combokeys": "^3.0.0",
+    "milsymbol": "^1.3.3",
+    "svg-to-dataurl": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "http-server ."
   },
   "repository": {
     "type": "git",

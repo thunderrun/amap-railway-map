@@ -21,19 +21,26 @@ map.plugin(["AMap.CustomLayer"], function() {
   map.add(customLayer);
 });
 
-const addInfantry = (faction, lnglat) => {
-  const image = draw.image(`./assets/${faction}.png`);
+const addUnit = (syntax = "SFGPUCI-----", lnglat) => {
+  const svg = new ms.Symbol(syntax).asSVG();
+  const svgDataURL = svgToDataURL(svg);
+  const image = draw.image(svgDataURL);
   image.addClass("move");
-  image.size(width, height);
   if (!lnglat) {
     lnglat = map.containerToLngLat(currentMousePosition);
-    image.center(currentMousePosition.x, currentMousePosition.y);
+    setTimeout(() => {
+      image.width(width);
+      image.center(currentMousePosition.x, currentMousePosition.y);
+    });
   } else {
     const center = map.lngLatToContainer([lnglat.lng, lnglat.lat]);
-    image.center(center.x, center.y);
+    setTimeout(() => {
+      image.width(width);
+      image.center(center.x, center.y);
+    });
   }
   image.remember("lnglat", lnglat);
-  image.remember("faction", faction);
+  image.remember("syntax", syntax);
   image.mousedown(e => {
     if (e.which === 3) {
       image.remove();

@@ -2,7 +2,6 @@ let gameMode = false;
 let toogleZIndex = true;
 let intervals = { w: null, a: null, s: null, d: null };
 const interval = 100;
-let height = 40;
 let width = 60;
 
 const coordinates = {
@@ -34,9 +33,7 @@ document.onkeyup = e => {
       map.setMapStyle("amap://styles/ab8e6d6ef2ba3500d70346b36f66dba2");
     }
   } else if (e.key === "b") {
-    addInfantry("blue");
-  } else if (e.key === "r") {
-    addInfantry("red");
+    addUnit();
   } else if (e.key === ";") {
     const store = images.map(image => image._memory);
     localforage.setItem("store", store).then(() => {
@@ -45,7 +42,7 @@ document.onkeyup = e => {
   } else if (e.key === "l") {
     localforage.getItem("store").then(data => {
       data.forEach(item => {
-        addInfantry(item.faction, item.lnglat);
+        addUnit(item.syntax, item.lnglat);
       });
     });
   } else if (e.key === "z") {
@@ -53,25 +50,22 @@ document.onkeyup = e => {
     customLayer.setzIndex(toogleZIndex ? 300 : 10);
   } else if (e.key === "]") {
     width *= 1.2;
-    height *= 1.2;
     images.forEach(image => {
-      image.size(width, height);
+      image.width(width);
     });
-    onRender();
+    onRender()
   } else if (e.key === "[") {
-    width /= 1.2;
-    height /= 1.2;
+    width *= 0.8;
     images.forEach(image => {
-      image.size(width, height);
+      image.width(width);
     });
-    onRender();
+    onRender()
   } else if (e.key === "\\") {
     width = 60;
-    height = 40;
     images.forEach(image => {
-      image.size(width, height);
+      image.width(width);
     });
-    onRender();
+    onRender()
   } else {
     clearInterval(intervals[e.key]);
     document.onkeydown = keyHandler;
