@@ -10,10 +10,10 @@
 - `s` move down
 - `d` move right
 - `g` game mode
-- `r` spawn redfor infantry on mouse position
-- `b` spawn bluefor infantry on mouse position
-- `l` load last saved game (WIP)
-- `;` save game (WIP)
+- `r` spawn Redfor infantry on mouse position
+- `b` spawn Bluefor infantry on mouse position
+- `l` load last saved game
+- `;` save game
 - `z` toogle NATO symbol z-index
 - `RMB` delete symbol
 

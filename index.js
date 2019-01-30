@@ -48,9 +48,16 @@ document.onkeyup = e => {
   } else if (e.key === "r") {
     addInfantry("red");
   } else if (e.key === ";") {
-    console.log("working in progress");
+    const store = images.map(image => image._memory);
+    localforage.setItem("store", store).then(() => {
+      console.log("Game Saved");
+    });
   } else if (e.key === "l") {
-    console.log("working in progress");
+    localforage.getItem("store").then(data => {
+      data.forEach(item => {
+        addInfantry(item.faction, item.lnglat);
+      });
+    });
   } else if (e.key === "z") {
     toogleZIndex = !toogleZIndex;
     customLayer.setzIndex(toogleZIndex ? 300 : 10);
@@ -62,14 +69,7 @@ document.onkeyup = e => {
 
 // game layer
 
-const redCenter = [116.42792, 39.902896];
-const blueCenter = [118.797466, 32.087265];
-
 let draw;
-let lnglat = {
-  lng: blueCenter[0],
-  lat: blueCenter[1]
-};
 let images = [];
 let dargging = false;
 let currentImage;
@@ -92,15 +92,21 @@ map.plugin(["AMap.CustomLayer"], function() {
   map.add(customLayer);
 });
 
-const addInfantry = faction => {
+const addInfantry = (faction, lnglat) => {
   const image = draw.image(`./${faction}.png`);
   image.addClass("move");
   image.size(60, 40);
-  const lnglat = map.containerToLngLat(currentMousePosition);
-  image.center(currentMousePosition.x, currentMousePosition.y);
+  if (!lnglat) {
+    lnglat = map.containerToLngLat(currentMousePosition);
+    image.center(currentMousePosition.x, currentMousePosition.y);
+  } else {
+    const center = map.lngLatToContainer([lnglat.lng, lnglat.lat]);
+    image.center(center.x, center.y);
+  }
   image.remember("lnglat", lnglat);
+  image.remember("faction", faction);
   image.mousedown(e => {
-    if (e.which === 3 ) {
+    if (e.which === 3) {
       image.remove();
     }
     currentImage = image;
@@ -128,7 +134,7 @@ map.on("mousemove", e => {
     if (inThrottle) return;
     inThrottle = true;
     currentImage.center(e.pixel.x, e.pixel.y);
-    setTimeout(() => (inThrottle = false), 100);
+    setTimeout(() => (inThrottle = false), 40);
   }
 });
 map.on("mouseup", e => {
