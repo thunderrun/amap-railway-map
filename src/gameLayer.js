@@ -22,6 +22,7 @@ map.plugin(["AMap.CustomLayer"], function() {
 });
 
 const addUnit = (syntax = "SFGPUCI-----", lnglat) => {
+  syntaxStore = syntax;
   const svg = new ms.Symbol(syntax).asSVG();
   const svgDataURL = svgToDataURL(svg);
   const image = draw.image(svgDataURL);

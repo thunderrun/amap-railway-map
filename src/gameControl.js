@@ -3,6 +3,7 @@ let toogleZIndex = true;
 let intervals = { w: null, a: null, s: null, d: null };
 const interval = 100;
 let width = 60;
+let syntaxStore = "SFGPUCI-----";
 
 const coordinates = {
   w: [0, 100],
@@ -34,6 +35,8 @@ document.onkeyup = e => {
     }
   } else if (e.key === "b") {
     addUnit();
+  } else if (e.key === "v") {
+    addUnit(syntaxStore);
   } else if (e.key === ";") {
     const store = images.map(image => image._memory);
     localforage.setItem("store", store).then(() => {

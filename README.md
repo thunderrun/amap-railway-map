@@ -11,6 +11,7 @@
 - `d` move right
 - `g` game mode
 - `b` spawn Friendly Infantry at mouse position
+- `v` duplicate last spawned unit at mouse position 
 - `l` load last saved game
 - `;` save game(info displayed in console `F12`)
 - `z` toogle NATO symbol z-index
@@ -24,8 +25,8 @@
 
 ```ts
 addUnit(syntax: String = "SFGPUCI-----", lnglat: [lng: Number, lat: Number] = <mouse position>)
-// example: spawn a Friendly Infantry at mouse position
-addUnit("SFGPUCI-----");
+// example: spawn a Hostile Infantry at mouse position
+addUnit("SHGPUCI-----");
 ```
 
 [syntax reference](https://spatialillusions.com/unitgenerator/)
