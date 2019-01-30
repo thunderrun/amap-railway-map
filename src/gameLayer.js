@@ -22,7 +22,7 @@ map.plugin(["AMap.CustomLayer"], function() {
 });
 
 const addInfantry = (faction, lnglat) => {
-  const image = draw.image(`./../assets/${faction}.png`);
+  const image = draw.image(`./assets/${faction}.png`);
   image.addClass("move");
   image.size(width, height);
   if (!lnglat) {
