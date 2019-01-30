@@ -1,0 +1,23 @@
+{
+  "name": "amap-railway-map",
+  "version": "0.0.1",
+  "description": "![](./assets/screenshot1.jpg) ![](./assets/screenshot2.jpg)",
+  "main": "./src/index.js",
+  "dependencies": {
+    "combokeys": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thunderrun/amap-railway-map.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thunderrun/amap-railway-map/issues"
+  },
+  "homepage": "https://github.com/thunderrun/amap-railway-map#readme"
+}
