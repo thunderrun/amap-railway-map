@@ -70,8 +70,27 @@ syntaxStore = "SFGPUCIM----"
 [options reference](https://www.spatialillusions.com/milsymbol/docs/index.html#mssymbolarg1-arg2--argn)
 [syntax reference](https://spatialillusions.com/unitgenerator/)
 
-### Set Symbols Size
+### Set All Symbols Size(if not specified in symbol options)
 
 ```ts
 resize(size: Number = 35);
 ```
+
+### Update Selected Symbol
+
+```ts
+// first select a symbol with right click, then:
+selected.update(syntax, options, lnglat);
+
+// example: add additionalInformation to selected Symbol
+selected.update(undefined, { additionalInformation: 'Rout!' });
+```
+
+### Use Milsymbol API
+
+```ts
+// first select a symbol with right click, then:
+selected.remember("symbol").getOptions();
+```
+
+[Milsymbol Documentation](https://www.spatialillusions.com/milsymbol/docs/index.html)

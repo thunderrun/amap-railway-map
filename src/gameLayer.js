@@ -1,7 +1,7 @@
 let draw;
 let images = [];
 let dargging = false;
-let currentImage;
+let selected;
 let currentMousePosition;
 let customLayer;
 
@@ -23,7 +23,8 @@ map.plugin(["AMap.CustomLayer"], function() {
 
 const addUnit = (syntax = "SFGPUCI-----", options, lnglat) => {
   syntaxStore = syntax;
-  const svg = new ms.Symbol(syntax, { size, ...options }).toDataURL();
+  const symbol = new ms.Symbol(syntax, { size, ...options });
+  const svg = symbol.toDataURL();
   const image = draw.image(svg);
   image.addClass("move");
   if (!lnglat) {
@@ -40,26 +41,37 @@ const addUnit = (syntax = "SFGPUCI-----", options, lnglat) => {
   image.remember("lnglat", lnglat);
   image.remember("syntax", syntax);
   image.remember("options", options);
+  image.remember("symbol", symbol);
+
+  const remove = () => {
+    image.remove();
+    const index = images.indexOf(image);
+    if (index !== -1) {
+      images.splice(index, 1);
+    }
+  };
+
   image.mousedown(e => {
     if (e.which === 2) {
-      image.remove();
-      const index = images.indexOf(image);
-      if (index !== -1) {
-        images.splice(index, 1);
-      }
+      remove();
       return;
     }
     if (e.which === 3) {
-      currentImage = image;
-      console.log(currentImage);
+      selected = image;
+      console.log("selected", selected);
       return;
     }
-    currentImage = image;
+    selected = image;
     map.setStatus({ dragEnable: false });
     image.center(e.clientX, e.clientY);
     dargging = true;
   });
   images.push(image);
+
+  image.update = (syntax2 = syntax, options2 = options, lnglat2 = lnglat) => {
+    remove();
+    addUnit(syntax2, options2, lnglat2);
+  };
 };
 
 function onRender() {
@@ -78,15 +90,15 @@ map.on("mousemove", e => {
   if (dargging) {
     if (inThrottle) return;
     inThrottle = true;
-    currentImage.center(e.pixel.x, e.pixel.y);
+    selected.center(e.pixel.x, e.pixel.y);
     setTimeout(() => (inThrottle = false), 40);
   }
 });
 map.on("mouseup", e => {
   if (dargging) {
     dargging = false;
-    currentImage.center(e.pixel.x, e.pixel.y);
-    currentImage.remember("lnglat", e.lnglat);
+    selected.center(e.pixel.x, e.pixel.y);
+    selected.remember("lnglat", e.lnglat);
     map.setStatus({ dragEnable: true });
   }
 });
