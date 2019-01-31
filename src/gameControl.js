@@ -30,8 +30,10 @@ document.onkeyup = async e => {
     case "g":
       gameMode = !gameMode;
       if (gameMode) {
+        document.title = 'Digital Campaign Simulator';
         map.setMapStyle("amap://styles/aebe189d2072666f6fccc6c2d4946af7");
       } else {
+        document.title = 'Amap Railyway Map';
         map.setMapStyle("amap://styles/ab8e6d6ef2ba3500d70346b36f66dba2");
       }
       break;
