@@ -67,7 +67,7 @@ syntaxStore = "SFGPUCIM----"
 // then press `v` to spawn a Friendly Motorized Infantry at mouse position
 ```
 
-[options reference](https://www.spatialillusions.com/milsymbol/docs/index.html#mssymbolarg1-arg2--argn)
+[options reference](https://www.spatialillusions.com/milsymbol/docs/index.html#mssymbolarg1-arg2--argn)   
 [syntax reference](https://spatialillusions.com/unitgenerator/)
 
 ### Set All Symbols Size(if not specified in symbol options)
