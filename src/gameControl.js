@@ -2,7 +2,7 @@ let gameMode = false;
 let toogleZIndex = true;
 let intervals = { w: null, a: null, s: null, d: null };
 const interval = 100;
-let width = 60;
+let size = 35;
 let syntaxStore = "SFGPUCI-----";
 let friendly = true;
 
@@ -30,10 +30,10 @@ document.onkeyup = async e => {
     case "g":
       gameMode = !gameMode;
       if (gameMode) {
-        document.title = 'Digital Campaign Simulator';
+        document.title = "Digital Campaign Simulator";
         map.setMapStyle("amap://styles/aebe189d2072666f6fccc6c2d4946af7");
       } else {
-        document.title = 'Amap Railyway Map';
+        document.title = "Amap Railyway Map";
         map.setMapStyle("amap://styles/ab8e6d6ef2ba3500d70346b36f66dba2");
       }
       break;
@@ -49,14 +49,14 @@ document.onkeyup = async e => {
     case ";":
       const store = images.map(image => image._memory);
       await localforage.setItem("store", store);
-      await localforage.setItem("width", width);
+      await localforage.setItem("size", size);
       console.log("Game Saved");
       break;
     case "l":
-      width = await localforage.getItem("width");
+      size = await localforage.getItem("size");
       const data = await localforage.getItem("store");
       data.forEach(item => {
-        addUnit(item.syntax, item.lnglat);
+        addUnit(item.syntax, item.options, item.lnglat);
       });
       break;
     case "z":
@@ -64,16 +64,16 @@ document.onkeyup = async e => {
       customLayer.setzIndex(toogleZIndex ? 300 : 10);
       break;
     case "]":
-      width *= 1.2;
-      onRender();
+      size *= 1.2;
+      resize();
       break;
     case "[":
-      width *= 0.8;
-      onRender();
+      size *= 0.8;
+      resize();
       break;
     case "\\":
-      width = 60;
-      onRender();
+      size = 35;
+      resize();
       break;
     case "f":
       friendly = !friendly;
@@ -85,6 +85,16 @@ document.onkeyup = async e => {
       document.onkeydown = keyHandler;
       break;
   }
+};
+
+const resize = (sizeParam) => {
+  if (sizeParam) size = sizeParam;
+  const tmp = images;
+  images = [];
+  tmp.forEach(image => {
+    addUnit(image._memory.syntax, image._memory.options, image._memory.lnglat);
+    image.remove();
+  });
 };
 
 let combokeys = new Combokeys(document);

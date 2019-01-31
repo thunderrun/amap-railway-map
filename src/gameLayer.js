@@ -21,30 +21,38 @@ map.plugin(["AMap.CustomLayer"], function() {
   map.add(customLayer);
 });
 
-const addUnit = (syntax = "SFGPUCI-----", lnglat) => {
+const addUnit = (syntax = "SFGPUCI-----", options, lnglat) => {
   syntaxStore = syntax;
-  const svg = new ms.Symbol(syntax).asSVG();
-  const svgDataURL = svgToDataURL(svg);
-  const image = draw.image(svgDataURL);
+  const svg = new ms.Symbol(syntax, { size, ...options }).toDataURL();
+  const image = draw.image(svg);
   image.addClass("move");
   if (!lnglat) {
     lnglat = map.containerToLngLat(currentMousePosition);
     setTimeout(() => {
-      image.width(width);
       image.center(currentMousePosition.x, currentMousePosition.y);
     });
   } else {
     const center = map.lngLatToContainer([lnglat.lng, lnglat.lat]);
     setTimeout(() => {
-      image.width(width);
       image.center(center.x, center.y);
     });
   }
   image.remember("lnglat", lnglat);
   image.remember("syntax", syntax);
+  image.remember("options", options);
   image.mousedown(e => {
-    if (e.which === 3) {
+    if (e.which === 2) {
       image.remove();
+      const index = images.indexOf(image);
+      if (index !== -1) {
+        images.splice(index, 1);
+      }
+      return;
+    }
+    if (e.which === 3) {
+      currentImage = image;
+      console.log(currentImage);
+      return;
     }
     currentImage = image;
     map.setStatus({ dragEnable: false });
@@ -56,7 +64,6 @@ const addUnit = (syntax = "SFGPUCI-----", lnglat) => {
 
 function onRender() {
   images.forEach(image => {
-    image.width(width);
     const center = map.lngLatToContainer([
       image._memory.lnglat.lng,
       image._memory.lnglat.lat
