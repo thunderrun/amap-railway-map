@@ -24,54 +24,59 @@ const keyHandler = e => {
 
 document.onkeydown = keyHandler;
 
-document.onkeyup = e => {
-  if (e.key === "g") {
-    // game mode
-    gameMode = !gameMode;
-    if (gameMode) {
-      map.setMapStyle("amap://styles/aebe189d2072666f6fccc6c2d4946af7");
-    } else {
-      map.setMapStyle("amap://styles/ab8e6d6ef2ba3500d70346b36f66dba2");
-    }
-  } else if (e.key === "b") {
-    addUnit();
-  } else if (e.key === "v") {
-    addUnit(syntaxStore);
-  } else if (e.key === ";") {
-    const store = images.map(image => image._memory);
-    localforage.setItem("store", store).then(() => {
+document.onkeyup = async e => {
+  switch (e.key) {
+    case "g":
+      gameMode = !gameMode;
+      if (gameMode) {
+        map.setMapStyle("amap://styles/aebe189d2072666f6fccc6c2d4946af7");
+      } else {
+        map.setMapStyle("amap://styles/ab8e6d6ef2ba3500d70346b36f66dba2");
+      }
+      break;
+    case "b":
+      addUnit();
+      break;
+    case "r":
+      addUnit("SHGPUCI-----");
+      break;
+    case "v":
+      addUnit(syntaxStore);
+      break;
+    case ";":
+      const store = images.map(image => image._memory);
+      await localforage.setItem("store", store);
+      await localforage.setItem("width", width);
       console.log("Game Saved");
-    });
-  } else if (e.key === "l") {
-    localforage.getItem("store").then(data => {
+      break;
+    case "l":
+      width = await localforage.getItem("width");
+      const data = await localforage.getItem("store");
       data.forEach(item => {
         addUnit(item.syntax, item.lnglat);
       });
-    });
-  } else if (e.key === "z") {
-    toogleZIndex = !toogleZIndex;
-    customLayer.setzIndex(toogleZIndex ? 300 : 10);
-  } else if (e.key === "]") {
-    width *= 1.2;
-    images.forEach(image => {
-      image.width(width);
-    });
-    onRender()
-  } else if (e.key === "[") {
-    width *= 0.8;
-    images.forEach(image => {
-      image.width(width);
-    });
-    onRender()
-  } else if (e.key === "\\") {
-    width = 60;
-    images.forEach(image => {
-      image.width(width);
-    });
-    onRender()
-  } else {
-    clearInterval(intervals[e.key]);
-    document.onkeydown = keyHandler;
+      break;
+    case "z":
+      toogleZIndex = !toogleZIndex;
+      customLayer.setzIndex(toogleZIndex ? 300 : 10);
+      break;
+    case "]":
+      width *= 1.2;
+      onRender();
+      break;
+    case "[":
+      width *= 0.8;
+      onRender();
+      break;
+    case "\\":
+      width = 60;
+      onRender();
+      break;
+    default:
+      // w, a, s, d
+      clearInterval(intervals[e.key]);
+      document.onkeydown = keyHandler;
+      break;
   }
 };
 

@@ -56,6 +56,7 @@ const addUnit = (syntax = "SFGPUCI-----", lnglat) => {
 
 function onRender() {
   images.forEach(image => {
+    image.width(width);
     const center = map.lngLatToContainer([
       image._memory.lnglat.lng,
       image._memory.lnglat.lat
