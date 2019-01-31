@@ -76,7 +76,7 @@ syntaxStore = "SFGPUCIM----"
 resize(size: Number = 35);
 ```
 
-### Update Selected Symbol
+### Update Selected Unit
 
 ```ts
 // first select a symbol with right click, then:
@@ -86,11 +86,9 @@ selected.update(syntax, options, lnglat);
 selected.update(undefined, { additionalInformation: 'Rout!' });
 ```
 
-### Use Milsymbol API
+### View Selected Unit Details
 
 ```ts
-// example: first select a symbol with right click, then:
-selected.remember("symbol").getOptions();
+selected._memory
 ```
 
-[Milsymbol Documentation](https://www.spatialillusions.com/milsymbol/docs/index.html)

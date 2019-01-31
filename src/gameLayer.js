@@ -41,7 +41,6 @@ const addUnit = (syntax = "SFGPUCI-----", options, lnglat) => {
   image.remember("lnglat", lnglat);
   image.remember("syntax", syntax);
   image.remember("options", options);
-  image.remember("symbol", symbol);
 
   const remove = () => {
     image.remove();
