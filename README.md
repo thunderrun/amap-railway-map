@@ -5,11 +5,13 @@
 
 ## Control
 
+### Basic
+
 - `w` move up
 - `a` move left
 - `s` move down
 - `d` move right
-- `g` game mode
+- `g` game mode (Display Cities and Strategic Railways only)
 - `b` spawn a Friendly Infantry at mouse position
 - `r` spawn a Hostile Infantry at mouse position
 - `v` duplicate last spawned unit at mouse position
@@ -21,6 +23,14 @@
 - `]` increase size of symbols
 - `[` decrease size of symbols
 - `\` reset size of symbols
+
+### Unit Spawn Shortcuts
+
+- `F` toogle Friendly/Hostile
+- `1` spawn a Motorized Infantry at mouse position
+- `2` spawn a Mechanized Infantry at mouse position
+- `3` spawn an Armor at mouse position
+- `0` spawn an Infantry at mouse position
 
 ## Console `F12`
 
@@ -45,6 +55,6 @@ syntaxStore = "SFGPUCIM----"
 ### Set Symbols Size
 
 ```ts
-width = 60 // (pixel)
-onRender()
+width = 60; // (pixel)
+onRender();
 ```

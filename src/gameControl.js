@@ -4,6 +4,7 @@ let intervals = { w: null, a: null, s: null, d: null };
 const interval = 100;
 let width = 60;
 let syntaxStore = "SFGPUCI-----";
+let friendly = true;
 
 const coordinates = {
   w: [0, 100],
@@ -72,6 +73,10 @@ document.onkeyup = async e => {
       width = 60;
       onRender();
       break;
+    case "f":
+      friendly = !friendly;
+      bind();
+      break;
     default:
       // w, a, s, d
       clearInterval(intervals[e.key]);
@@ -80,4 +85,33 @@ document.onkeyup = async e => {
   }
 };
 
-// var combokeys = new Combokeys(document);
+let combokeys = new Combokeys(document);
+
+const bind = () => {
+  const faction = friendly ? "F" : "H";
+  const shortcuts = [
+    {
+      key: "1",
+      syntax: `S${faction}GPUCIM----`
+    },
+    {
+      key: "2",
+      syntax: `S${faction}GPUCIZ----`
+    },
+    {
+      key: "3",
+      syntax: `S${faction}GPUCA-----`
+    },
+    {
+      key: "0",
+      syntax: `S${faction}GPUCI----`
+    }
+  ];
+  shortcuts.forEach(shortcut => {
+    combokeys.bind(shortcut.key, () => {
+      addUnit(shortcut.syntax);
+    });
+  });
+};
+
+bind();

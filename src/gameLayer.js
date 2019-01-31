@@ -6,8 +6,8 @@ let currentMousePosition;
 let customLayer;
 
 map.plugin(["AMap.CustomLayer"], function() {
-  var size = map.getSize();
-  var canvas = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const size = map.getSize();
+  const canvas = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   canvas.setAttribute("xmlns", "http://www.w3.org/2000/svg");
   canvas.setAttribute("width", size.width);
   canvas.setAttribute("height", size.height);
