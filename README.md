@@ -89,7 +89,7 @@ selected.update(undefined, { additionalInformation: 'Rout!' });
 ### Use Milsymbol API
 
 ```ts
-// first select a symbol with right click, then:
+// example: first select a symbol with right click, then:
 selected.remember("symbol").getOptions();
 ```
 
